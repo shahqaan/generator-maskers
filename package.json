@@ -5,6 +5,10 @@
   "files": [
     "app",
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shahqaan/generator-sks"
+  },
   "keywords": [
     "yeoman-generator"
   ],
