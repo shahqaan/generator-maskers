@@ -1,10 +1,9 @@
 {
   "name": "generator-sks",
   "version": "0.1.0",
-  "description": "Generator for KrakenJS and Sequelize",
+  "description": "Generator for KrakenJS with Bunyan logger and either Sequelize or Mongoose ORM. Optionally enable socket.io.",
   "files": [
     "app",
-    "router"
   ],
   "keywords": [
     "yeoman-generator"
