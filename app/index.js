@@ -6,20 +6,7 @@ var generators = require('yeoman-generator');
 module.exports = generators.Base.extend({
 
   constructor: function() {
-
     generators.Base.apply(this, arguments);
-
-    this.option('coffee'); // This method adds support for --coffee flag
-    this.log('constructor called');
-
-  },
-
-  method1: function() {
-    this.log('method1 just ran');
-  },
-
-  method2: function() {
-    this.log('method2 just ran');
   },
 
   installingDependencies: function() {
@@ -60,7 +47,6 @@ module.exports = generators.Base.extend({
     this.npmInstall(productionInstall, {save: true});
 
     this.npmInstall(devInstall, {saveDev: true});
-
 
   },
 
