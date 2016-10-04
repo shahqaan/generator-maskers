@@ -1,0 +1,18 @@
+{
+  "name": "generator-sks",
+  "version": "0.1.0",
+  "description": "Generator for KrakenJS and Sequelize",
+  "files": [
+    "app",
+    "router"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^0.24.1"
+  },
+  "devDependencies": {
+    "lodash": "^4.16.2"
+  }
+}
