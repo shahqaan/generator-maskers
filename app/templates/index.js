@@ -24,7 +24,7 @@ app = module.exports = express();
 
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
 
-global.db = require('./app/models/index');
+<% if (db == 'sequelize') { %> global.db = require('./app/models/index'); <% } %>
 global.log = require('./app/lib/logger');
 global.appRoot = path.resolve(__dirname);
 

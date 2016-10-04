@@ -1,0 +1,33 @@
+{
+  "specialization": {
+  },
+  "middleware": {
+    "static": {
+      "module": {
+        "arguments": [
+          "path:./.build"
+        ]
+      }
+    },
+    "router": {
+      "module": {
+        "arguments": [
+          {
+            "directory": "path:./app/controllers"
+          }
+        ]
+      }
+    },
+    "authentication": {
+      "enabled": true,
+      "priority": 100,
+      "route": "/api/*",
+      "module": {
+        "name": "path:./app/lib/auth"
+      }
+    }
+  },
+  "app": {
+    "url": ""
+  }
+}

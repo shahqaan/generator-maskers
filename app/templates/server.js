@@ -3,6 +3,8 @@
 var app = require('./index');
 var http = require('http');
 <% if (isSockets) { %> var webSockets = require('./app/lib/web_sockets'); <% } %>
+
+<% if (db == 'mongoose') { %>
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 var mongoString = require('./config/mongo.json').url;
@@ -10,7 +12,8 @@ var mongoString = require('./config/mongo.json').url;
 var mongoLogger = function(coll, method, query, doc) {
   global.log.debug(coll + '.' + method + '( ' + JSON.stringify(query) +  ', ' + JSON.stringify(doc) + ' )');
 };
-mongoose.set('debug', true);
+
+mongoose.set('debug', true); // mongoose.set('debug', mongoLogger)
 
 mongoose.connect(mongoString, function(error, db) {
   if (error) {
@@ -19,6 +22,8 @@ mongoose.connect(mongoString, function(error, db) {
     global.log.info('Connected to MongoDB');
   }
 });
+
+<% } %>
 
 var server = http.Server(app);
 server.listen(process.env.PORT || 8000);
