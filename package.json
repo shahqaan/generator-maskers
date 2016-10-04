@@ -1,6 +1,6 @@
 {
   "name": "generator-sks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Generator for KrakenJS with Bunyan logger and either Sequelize or Mongoose ORM. Optionally enable socket.io.",
   "files": [
     "app"
