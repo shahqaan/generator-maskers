@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Generator for KrakenJS with Bunyan logger and either Sequelize or Mongoose ORM. Optionally enable socket.io.",
   "files": [
-    "app",
+    "app"
   ],
   "repository": {
     "type": "git",
