@@ -17,8 +17,8 @@ As this is a yeoman generator, make sure you have yeoman installed:
   
 To install the generator:
 
-  `npm install -g generator-sks`
+  `npm install -g generator-maskers`
   
 # Usage
 
-  `yo sks`
+  `yo maskers`
