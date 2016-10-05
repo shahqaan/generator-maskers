@@ -21,4 +21,4 @@ To install the generator:
   
 # Usage
 
-  `yo maskers`
+  `cd /path/to/app/directory; yo maskers`
