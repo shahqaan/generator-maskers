@@ -50,118 +50,103 @@ module.exports = generators.Base.extend({
 
   },
 
-  writing: function() {
-
-    this.fs.copyTpl(
-      this.templatePath('.gitignore'),
-      this.destinationPath('.gitignore')
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('package.json'),
-      this.destinationPath('package.json'),
-      {name: this.appname, description: this.answers.description}
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('logger.js'),
-      this.destinationPath('app/lib/logger.js'),
-      {name: this.appname}
-    );
-
-    if (this.answers.isSockets) {
-      this.fs.copyTpl(
-        this.templatePath('web_sockets.js'),
-        this.destinationPath('app/lib/web_sockets.js'),
-        {name: this.appname}
-      );
+  _getAnswers: function() {
+    return {
+      name: this.appname,
+      description: this.answers.description,
+      db: this.answers.db,
+      isSockets: this.answers.isSockets
     }
+  },
 
-    this.fs.copyTpl(
-      this.templatePath('index.js'),
-      this.destinationPath('index.js'),
-      {db: this.answers.db}
-    );
+  writing: {
 
-    this.fs.copyTpl(
-      this.templatePath('server.js'),
-      this.destinationPath('server.js'),
-      {name: this.appname, isSockets: this.answers.isSockets, db: this.answers.db}
-    );
+    db: function() {
 
-    this.fs.copyTpl(
-      this.templatePath(this.answers.db + '/users.js'),
-      this.destinationPath('app/models/users.js')
-    );
-
-    if (this.answers.db === 'sequelize') {
 
       this.fs.copyTpl(
-        this.templatePath('sequelize/users.migrate.js'),
-        this.destinationPath('app/db/migrate/' + (new Date().getTime() / 1000) + '-create-users.js')
+        this.templatePath(this.answers.db + '/users.js'),
+        this.destinationPath('app/models/users.js')
+      );
+
+      if (this.answers.db === 'sequelize') {
+
+        this.fs.copyTpl(
+          this.templatePath('sequelize/users.migrate.js'),
+          this.destinationPath('app/db/migrate/' + (new Date().getTime() / 1000) + '-create-users.js')
+        );
+
+        this.fs.copyTpl(
+          this.templatePath('sequelize/index.js'),
+          this.destinationPath('app/models/index.js')
+        );
+
+        this.fs.copyTpl(
+          this.templatePath('sequelize/database.js'),
+          this.destinationPath('config/database.js'),
+          this._getAnswers()
+        );
+
+        this.fs.copyTpl(
+          this.templatePath('sequelize/database.js'),
+          this.destinationPath('config/database.sample.js'),
+          this._getAnswers()
+        );
+
+        this.fs.copyTpl(
+          this.templatePath('sequelize/.sequelizerc'),
+          this.destinationPath('.sequelize.rc')
+        );
+
+      } else if (this.answers.db === 'mongoose') {
+
+        this.fs.copyTpl(
+          this.templatePath('mongoose/mongo.json'),
+          this.destinationPath('config/mongo.json'),
+          this._getAnswers()
+        );
+
+        this.fs.copyTpl(
+          this.templatePath('mongoose/mongo.json'),
+          this.destinationPath('config/mongo.sample.json'),
+          this._getAnswers()
+        );
+
+      }
+    },
+
+    files: function() {
+
+      this.fs.copyTpl(
+        this.templatePath('*'),
+        this.destinationPath(),
+        this._getAnswers()
       );
 
       this.fs.copyTpl(
-        this.templatePath('sequelize/index.js'),
-        this.destinationPath('app/models/index.js')
+        this.templatePath('.*'),
+        this.destinationPath(),
+        this._getAnswers()
       );
 
       this.fs.copyTpl(
-        this.templatePath('sequelize/database.js'),
-        this.destinationPath('config/database.js'),
-        {name: this.appname}
+        this.templatePath('config/*'),
+        this.destinationPath('config/')
       );
 
       this.fs.copyTpl(
-        this.templatePath('sequelize/database.js'),
-        this.destinationPath('config/database.sample.js'),
-        {name: this.appname}
-      );
-
-    } else if (this.answers.db === 'mongoose') {
-
-      this.fs.copyTpl(
-        this.templatePath('mongoose/mongo.json'),
-        this.destinationPath('config/mongo.json'),
-        {name: this.appname}
+        this.templatePath('lib/*'),
+        this.destinationPath('app/lib/'),
+        this._getAnswers()
       );
 
       this.fs.copyTpl(
-        this.templatePath('mongoose/mongo.json'),
-        this.destinationPath('config/mongo.sample.json'),
-        {name: this.appname}
+        this.templatePath('controllers/users.js'),
+        this.destinationPath('app/controllers/api/v1/users.js'),
+        this._getAnswers()
       );
-
-    } else {
 
     }
-
-    this.fs.copyTpl(
-      this.templatePath('users.js'),
-      this.destinationPath('app/controllers/api/v1/users.js'),
-      {db: this.answers.db}
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('auth.js'),
-      this.destinationPath('app/lib/auth.js')
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('config/config.json'),
-      this.destinationPath('config/config.json')
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('config/environment.json'),
-      this.destinationPath('config/development.json')
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('config/environment.json'),
-      this.destinationPath('config/production.json')
-    );
-
 
   },
 
