@@ -1,4 +1,4 @@
-var log = require('../lib/logger').child({type: "database"});
+var log = require('../app/lib/logger').child({type: "database"});
 
 module.exports = {
   "development": {

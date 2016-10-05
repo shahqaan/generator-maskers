@@ -35,6 +35,7 @@ module.exports = generators.Base.extend({
         productionInstall.push('mongoose');
         break;
       case 'sequelize':
+        productionInstall.push('mysql');
         productionInstall.push('sequelize');
         devInstall.push('sequelize-cli');
         break;
@@ -73,7 +74,7 @@ module.exports = generators.Base.extend({
 
         this.fs.copyTpl(
           this.templatePath('sequelize/users.migrate.js'),
-          this.destinationPath('app/db/migrate/' + (new Date().getTime() / 1000) + '-create-users.js')
+          this.destinationPath('app/db/migrate/' + Math.floor(new Date().getTime() / 1000) + '-create-users.js')
         );
 
         this.fs.copyTpl(
@@ -95,7 +96,7 @@ module.exports = generators.Base.extend({
 
         this.fs.copyTpl(
           this.templatePath('sequelize/.sequelizerc'),
-          this.destinationPath('.sequelize.rc')
+          this.destinationPath('.sequelizerc')
         );
 
       } else if (this.answers.db === 'mongoose') {

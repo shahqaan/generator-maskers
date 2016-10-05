@@ -3,7 +3,7 @@ var Sequelize = require('sequelize');
 var databaseConfig = require('../../config/database.js');
 var fs = require('fs');
 var path = require('path');
-var app = require('../index');
+var app = require('../../index');
 
 
 if (!databaseConfig[app.settings.env]) {
