@@ -43,7 +43,7 @@ module.exports = generators.Base.extend({
         break;
     }
 
-    if (this.answers.sockets) { productionInstall.push('socket.io'); }
+    if (this.answers.isSockets) { productionInstall.push('socket.io'); }
 
     this.npmInstall(productionInstall, {save: true});
 
