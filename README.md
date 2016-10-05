@@ -1,6 +1,11 @@
-# generator-sks
+# generator-maskers
 
-Yeoman generator for Express setup with KrakenJS / Bunyan / Sequelize or Mongoose / SocketIO (Optional)
+Yeoman generator for:
+
+* Express with KrakenJS
+* Mongoose or Sequelize
+* Sockets.io (Optional)
+* AngularJS or ReactJS (Upcoming)
 
 __NOTE__: Only tested with Mongoose and without Sockets at the moment. 
 
