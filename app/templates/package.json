@@ -5,13 +5,12 @@
   "main": "index.js",
   "license": "ISC",
   "scripts": {
+    "build": "webpack -p",
     "start": "node server.js | bunyan",
-    "postinstall": "gulp",
-    "test": "grunt test",
-    "build": "grunt build",
-    "all": "npm run build && npm run test",
     "migrate": "sequelize db:migrate | bunyan",
-    "dev-start": "nodemon server.js | bunyan --output short --color"
+    "server-start": "nodemon server.js | bunyan --output short --color",
+    "client-start": "webpack -d --watch",
+    "dev-start": "concurrently --kill-others \"npm run server-start\" \"npm run client-start\""
   },
   "dependencies": {},
   "devDependencies": {}

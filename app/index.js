@@ -24,6 +24,7 @@ module.exports = generators.Base.extend({
     ];
 
     var devInstall = [
+      'concurrently',
       'nodemon',
       'mocha',
       'supertest',
@@ -45,10 +46,50 @@ module.exports = generators.Base.extend({
 
     if (this.answers.isSockets) { productionInstall.push('socket.io'); }
 
+    if (this.answers.frontend === 'react') {
+      productionInstall.push('webpack');
+      productionInstall.push('babel-core');
+      productionInstall.push('babel-loader');
+      productionInstall.push('babel-preset-es2015');
+      productionInstall.push('babel-preset-react');
+      productionInstall.push('react');
+      productionInstall.push('react-dom');
+    }
+
     this.npmInstall(productionInstall, {save: true});
 
     this.npmInstall(devInstall, {saveDev: true});
 
+  },
+
+  setupReact: function() {
+
+    if (this.answers.frontend === 'react') {
+      this.fs.copyTpl(
+        this.templatePath('react/*'),
+        this.destinationPath(''),
+        this._getAnswers()
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('react/.babelrc'),
+        this.destinationPath('.babelrc'),
+        this._getAnswers()
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('react/client/*'),
+        this.destinationPath('client/'),
+        this._getAnswers()
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('controllers/index.js'),
+        this.destinationPath('app/controllers/index.js'),
+        this._getAnswers()
+      );
+
+    }
   },
 
   _getAnswers: function() {
@@ -147,7 +188,7 @@ module.exports = generators.Base.extend({
         this._getAnswers()
       );
 
-    }
+    },
 
   },
 
@@ -171,6 +212,12 @@ module.exports = generators.Base.extend({
       name: 'db',
       message: 'Which ORM would you like?',
       choices: ['mongoose', 'sequelize']
+    }, {
+      type: 'list',
+      name: 'frontend',
+      message: 'Which frontend framework would you like to use?',
+      choices: ['react', 'none'],
+      store: true
     }]).then(function(answers) {
       this.answers = answers;
       this.appname = answers.appname;

@@ -5,9 +5,7 @@ Yeoman generator for:
 * Express with KrakenJS
 * Mongoose or Sequelize
 * Sockets.io (Optional)
-* AngularJS or ReactJS (Upcoming)
-
-__NOTE__: Only tested with Mongoose and without Sockets at the moment. 
+* Bare-bones ReactJS with Webpack and Babel
 
 # Installation
 
