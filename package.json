@@ -1,7 +1,7 @@
 {
   "name": "generator-maskers",
-  "version": "0.1.1",
-  "description": "Yeoman generator for Express with KrakenJS, Mongoose or Sequelize, Sockets.io (Optional), AngularJS or ReactJS (Upcoming)",
+  "version": "0.1.2",
+  "description": "Yeoman generator for Express with KrakenJS, Mongoose or Sequelize, Sockets.io (Optional), AngularJS or ReactJS",
   "files": [
     "app"
   ],
@@ -10,7 +10,13 @@
     "url": "https://github.com/shahqaan/generator-maskers"
   },
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "react",
+    "angular",
+    "node",
+    "javascript",
+    "sequelize",
+    "mongoose"
   ],
   "dependencies": {
     "yeoman-generator": "^0.24.1"
