@@ -5,11 +5,11 @@ var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
 
-  constructor: function() {
+  constructor: function () {
     generators.Base.apply(this, arguments);
   },
 
-  installingDependencies: function() {
+  installingDependencies: function () {
 
     var productionInstall = [
       'lodash',
@@ -44,16 +44,54 @@ module.exports = generators.Base.extend({
         break;
     }
 
-    if (this.answers.isSockets) { productionInstall.push('socket.io'); }
+    if (this.answers.isSockets) {
+      productionInstall.push('socket.io');
+    }
 
-    if (this.answers.frontend === 'react') {
-      productionInstall.push('webpack');
-      productionInstall.push('babel-core');
-      productionInstall.push('babel-loader');
-      productionInstall.push('babel-preset-es2015');
-      productionInstall.push('babel-preset-react');
-      productionInstall.push('react');
-      productionInstall.push('react-dom');
+    switch (this.answers.frontend) {
+      case 'react': {
+        productionInstall.push('webpack');
+        productionInstall.push('babel-core');
+        productionInstall.push('babel-loader');
+        productionInstall.push('babel-preset-es2015');
+        productionInstall.push('babel-preset-react');
+        productionInstall.push('react');
+        productionInstall.push('react-dom');
+        break;
+      }
+      case 'angular4': {
+        productionInstall.push(
+          '@angular/common',
+          '@angular/compiler',
+          '@angular/core',
+          '@angular/forms',
+          '@angular/http',
+          '@angular/platform-browser',
+          '@angular/platform-browser-dynamic',
+          '@angular/router',
+          '@types/node',
+          'core-js',
+          'rxjs',
+          'zone.js',
+          'angular2-template-loader',
+          'awesome-typescript-loader',
+          'compression-webpack-plugin',
+          'extract-text-webpack-plugin',
+          'css-loader',
+          'file-loader',
+          'html-loader',
+          'html-webpack-plugin',
+          'node-sass',
+          'raw-loader',
+          'sass-loader',
+          'style-loader',
+          'to-string-loader',
+          'typescript',
+          'webpack',
+          'copy-webpack-plugin'
+        );
+        break;
+      }
     }
 
     this.npmInstall(productionInstall, {save: true});
@@ -62,7 +100,7 @@ module.exports = generators.Base.extend({
 
   },
 
-  setupReact: function() {
+  setupReact: function () {
 
     if (this.answers.frontend === 'react') {
       this.fs.copyTpl(
@@ -92,7 +130,31 @@ module.exports = generators.Base.extend({
     }
   },
 
-  _getAnswers: function() {
+  setupAngular4: function () {
+
+    if (this.answers.frontend === 'angular4') {
+      this.fs.copyTpl(
+        this.templatePath('angular4/*'),
+        this.destinationPath(''),
+        this._getAnswers()
+      );
+      this.directory(
+        this.templatePath('angular4/client'),
+        this.destinationPath('client/'),
+        this._getAnswers()
+      );
+
+
+      this.fs.copyTpl(
+        this.templatePath('controllers/index.js'),
+        this.destinationPath('app/controllers/index.js'),
+        this._getAnswers()
+      );
+
+    }
+  },
+
+  _getAnswers: function () {
     return {
       name: this.appname,
       description: this.answers.description,
@@ -103,7 +165,7 @@ module.exports = generators.Base.extend({
 
   writing: {
 
-    db: function() {
+    db: function () {
 
 
       this.fs.copyTpl(
@@ -157,7 +219,7 @@ module.exports = generators.Base.extend({
       }
     },
 
-    files: function() {
+    files: function () {
 
       this.fs.copyTpl(
         this.templatePath('*'),
@@ -192,7 +254,7 @@ module.exports = generators.Base.extend({
 
   },
 
-  prompting: function() {
+  prompting: function () {
     return this.prompt([{
       type: 'input',
       name: 'appname',
@@ -216,9 +278,9 @@ module.exports = generators.Base.extend({
       type: 'list',
       name: 'frontend',
       message: 'Which frontend framework would you like to use?',
-      choices: ['react', 'none'],
+      choices: ['react', 'angular4', 'none'],
       store: true
-    }]).then(function(answers) {
+    }]).then(function (answers) {
       this.answers = answers;
       this.appname = answers.appname;
     }.bind(this));
