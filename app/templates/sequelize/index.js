@@ -27,7 +27,7 @@ fs
   })
   .forEach(function (file) {
     var model = sequelize.import(path.join(__dirname, file));
-    var startCaseName = startCase(model.name).split(' ').join('');
+    var startCaseName = startCase(model.name).replace(/\s/g, '');
     db[startCaseName] = model;
   });
 
