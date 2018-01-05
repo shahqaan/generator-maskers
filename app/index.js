@@ -37,6 +37,7 @@ module.exports = generators.Base.extend({
         break;
       case 'sequelize':
         productionInstall.push('mysql');
+        productionInstall.push('mysql2');
         productionInstall.push('sequelize');
         devInstall.push('sequelize-cli');
         break;

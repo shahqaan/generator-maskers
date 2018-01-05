@@ -4,7 +4,7 @@ var databaseConfig = require('../../config/database.js');
 var fs = require('fs');
 var path = require('path');
 var app = require('../../index');
-
+var startCase = require('lodash').startCase;
 
 if (!databaseConfig[app.settings.env]) {
   throw new Error('Database configuration object for missing for environment ' + app.settings.env);
@@ -27,10 +27,8 @@ fs
   })
   .forEach(function (file) {
     var model = sequelize.import(path.join(__dirname, file));
-    model.name = model.name.charAt(0).toUpperCase() + model.name.slice(1).replace(/_(.)/g, function(match, char) {
-        return char.toUpperCase();
-      });
-    db[model.name] = model;
+    var startCaseName = startCase(model.name).replace(/\s/g, '');
+    db[startCaseName] = model;
   });
 
 Object.keys(db).forEach(function (modelName) {
